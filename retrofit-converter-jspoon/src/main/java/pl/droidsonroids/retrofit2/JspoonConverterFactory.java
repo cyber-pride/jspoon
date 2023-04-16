@@ -2,6 +2,8 @@ package pl.droidsonroids.retrofit2;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+
+import jdk.internal.org.jline.utils.Log;
 import okhttp3.ResponseBody;
 import pl.droidsonroids.jspoon.Jspoon;
 import pl.droidsonroids.jspoon.exception.EmptySelectorException;
@@ -25,11 +27,10 @@ public final class JspoonConverterFactory extends Converter.Factory {
 
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-
         try {
-            return new JspoonResponseBodyConverter<>(retrofit.baseUrl(),
-            jspoon.adapter((Class<?>) type));
+            return new JspoonResponseBodyConverter<>(retrofit.baseUrl(), jspoon.adapter((Class<?>) type));
         } catch (EmptySelectorException ex) {
+            ex.printStackTrace();
             return null; // Let retrofit choose another converter
         }
     }

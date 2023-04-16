@@ -130,6 +130,9 @@ abstract class HtmlField<T> {
         case "outerHtml":
             value = node.outerHtml();
             break;
+        case "script":
+            value = node.data();
+            break;
         default:
             value = node.attr(spec.getAttribute());
             break;

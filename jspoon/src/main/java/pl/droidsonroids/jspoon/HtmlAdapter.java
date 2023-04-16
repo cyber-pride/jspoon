@@ -12,6 +12,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import pl.droidsonroids.jspoon.annotation.Selector;
@@ -30,13 +31,15 @@ public class HtmlAdapter<T> {
         this.clazz = clazz;
         htmlFieldCache = new LinkedHashMap<>();
 
-        for (Field f : Utils.getAllDeclaredFields(clazz)) {
+        List<Field> allDeclaredFieldDataList = Utils.getAllDeclaredFields(clazz);
 
-            FieldType field = new FieldType(clazz, f);
+        for (int i = 0; i < allDeclaredFieldDataList.size(); i++) {
 
-            if (!field.isModifiable()) {
-                continue;
-            }
+            FieldType field = new FieldType(clazz, allDeclaredFieldDataList.get(i));
+
+           // if (!field.isModifiable()) {
+           //     continue;
+          //  }
 
             // Annotated field
             Selector selector = field.getAnnotation(Selector.class);
@@ -57,7 +60,7 @@ public class HtmlAdapter<T> {
         }
 
         if (htmlFieldCache.isEmpty()) {
-            throw new EmptySelectorException(clazz);
+            //   throw new EmptySelectorException(clazz);
         }
     }
 
